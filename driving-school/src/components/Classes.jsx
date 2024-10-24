@@ -3,7 +3,7 @@ export default function classes() {
     <div>
       <div
         dir="rtl"
-        className="card bg-slate-700 p-7 py-5  w-full h-96 overflow-y-scroll overflow-x-auto"
+        className="card bg-slate-900 p-7 py-5  w-full h-96 overflow-y-scroll overflow-x-auto"
       >
         {/* <div className="relative m-[2px] mb-3 mr-5 float-left">
           <input
@@ -30,29 +30,29 @@ export default function classes() {
         </div> */}
 
         <table className="min-w-full text-left text-sm whitespace-nowrap p-2 ">
-          <thead className="uppercase tracking-wider sticky top-0 outline outline-2  bg-slate-300 drop-shadow-sm">
+          <thead className="uppercase tracking-wider sticky top-0 outline outline-2 bg-slate-900 drop-shadow-sm">
             <tr className="text-start">
               <th
                 scope="col"
-                className="px-6 py-4 text-xl font-black text-slate-700"
+                className="px-6 py-4 text-xl font-black text-yellow-400"
               >
                 #
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-xl font-black text-slate-700"
+                className="px-6 py-4 text-xl font-black text-yellow-400"
               >
                 نام مدرس
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-xl font-black text-slate-700"
+                className="px-6 py-4 text-xl font-black text-yellow-400"
               >
                 مکان
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-xl font-black text-slate-700 "
+                className="px-6 py-4 text-xl font-black text-yellow-400 "
               >
                 زمان
               </th>
@@ -61,7 +61,7 @@ export default function classes() {
 
           <tbody>
             <tr className="border-b hover:bg-slate-50 text-center">
-              <th scope="row" className="px-6 py-4 text-lg">
+              <th scope="row" className="px-6 py-4 text-lg text-yellow-400">
                 #1
               </th>
               <td className="px-6 py-4 text-lg">امیر شریفی</td>
@@ -71,7 +71,7 @@ export default function classes() {
               <td className="px-6 py-4 text-lg">
                 <p>
                   <span className=" whitespace-pre-wrap">ساعت </span>
-                  <span className="text-primary-400">17:30</span>
+                  <span className="text-yellow-400">17:30</span>
                 </p>
               </td>
             </tr>

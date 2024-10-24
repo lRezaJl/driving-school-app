@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import Image from "next/image";
-import HamyabLogo from "../../public/HamyabLogo.png";
+import HamyabLogo from "../../public/logo.png";
 import EditProfile from "@/Components/EditProfile";
 import Dashboard from "@/Components/Dashboard";
 import Classes from "@/Components/Classes";
@@ -12,10 +12,10 @@ import Payments from "@/Components/Payments";
 import { CiEdit } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa6";
-import { SiCashapp } from "react-icons/si";
+import { GiReceiveMoney } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
-import { SiGoogleclassroom } from "react-icons/si";
+import { HiMiniUserGroup } from "react-icons/hi2";
 
 const userPage = () => {
   const [focusedCard, setFocusedCard] = useState([2]);
@@ -62,26 +62,23 @@ const userPage = () => {
     >
       {/* بخش 1 */}
       <div
-        className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${
-          focusedCard.includes(1)
+        className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${focusedCard.includes(1)
             ? "flex-[0.5] max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] max-xl:flex-[0.75]"
             : "max-lg:cursor-pointer"
-        }`}
+          }`}
       >
         <div
           onClick={() => handleFocus(1)}
-          className={`absolute z-40 flex justify-center items-center min-w-[52rem] min-h-20 mt-2 p-2 transform transition-all duration-500 ${
-            focusedCard.includes(1)
+          className={`absolute z-40 flex justify-center items-center min-w-[52rem] min-h-20 mt-2 p-2 transform transition-all duration-500 ${focusedCard.includes(1)
               ? "top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"
-          }`}
+            }`}
         >
           <span
-            className={`text-center hover:rotate-0 text-gray-800 text-xl font-bold transform transition-all duration-500 ${
-              focusedCard.includes(1)
+            className={`text-center hover:rotate-0 text-gray-800 text-xl font-bold transform transition-all duration-500 ${focusedCard.includes(1)
                 ? "rotate-0"
                 : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer text-2xl max-sm:text-lg"
-            }`}
+              }`}
           >
             منو
           </span>
@@ -96,10 +93,10 @@ const userPage = () => {
               width={180}
               height={67}
             />
-            <p className="text-3xl font-bold">همیاب</p>
+            <p className="text-3xl font-black text-slate-900">موسسه آموزشی همیاب</p>
           </div>
 
-          <div className="relative flex flex-row justify-start items-start gap-4 p-3 glass bg-slate-800 rounded-box">
+          <div className="relative flex flex-row justify-start items-start gap-4 p-3 glass bg-slate-900 rounded-box">
             <div className="avatar">
               <div className="w-16 rounded-full">
                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -107,13 +104,13 @@ const userPage = () => {
             </div>
             <div className="flex flex-col mt-1 space-y-1">
               <p className="text-lg font-medium text-gray-100">RezaJ</p>
-              <p className="text-base font-normal text-primary-400 tracking-wide">
+              <p className="text-base font-normal text-yellow-400">
                 09123456789
               </p>
             </div>
             <button
               onClick={() => handleComponentChange("EditProfile")}
-              className="absolute left-3 top-3 text-xl text-gray-800 p-1 rounded-badge bg-primary-400"
+              className="absolute left-3 top-3 text-xl text-gray-800 p-1 rounded-badge bg-yellow-400"
             >
               <CiEdit />
             </button>
@@ -122,10 +119,10 @@ const userPage = () => {
           <nav className="flex flex-col justify-center items-start gap-8 my-10">
             <Link
               href="/"
-              className="btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
+              className="btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
             >
-              <IoHome className="text-4xl font-bold" />
-              <p className="text-4xl font-bold tracking-wide ">خانه</p>
+              <IoHome className="text-3xl font-bold" />
+              <p className="text-2xl font-black ">خانه</p>
             </Link>
 
             <button
@@ -133,74 +130,55 @@ const userPage = () => {
                 setFocusedCard([2]);
                 handleComponentChange("Dashboard");
               }}
-              className={`btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-      ${
-        activeComponent === "Dashboard"
-          ? "bg-gradient-to-r from-blue-100 to-slate-800"
-          : ""
-      }`}
+              className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
+              ${activeComponent === "Dashboard"
+                  ? "bg-gradient-to-r from-slate-700 to-slate-900"
+                  : ""
+                }`}
             >
               <MdSpaceDashboard
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Dashboard" ? "text-gray-300" : ""
-                }`}
+                className={`text-3xl font-bold ${activeComponent === "Dashboard" ? "text-gray-300" : ""
+                  }`}
               />
               <p
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Dashboard" ? "text-gray-300" : ""
-                }`}
+                className={`text-2xl font-black ${activeComponent === "Dashboard" ? "text-gray-300" : ""
+                  }`}
               >
                 داشبورد
               </p>
             </button>
 
-            <button
-              onClick={() => {
+            <button onClick={() => {
                 setFocusedCard([2]);
                 handleComponentChange("Classes");
               }}
-              className={`btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-      ${
-        activeComponent === "Classes"
-          ? "bg-gradient-to-r from-blue-100 to-slate-800"
-          : ""
-      }`}
+              className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
+                ${activeComponent === "Classes"
+                  ? "bg-gradient-to-r from-slate-700 to-slate-900"
+                  : ""
+                }`}
             >
-              <SiGoogleclassroom
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Classes" ? "text-gray-300" : ""
-                }`}
-              />
-              <p
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Classes" ? "text-gray-300" : ""
-                }`}
-              >
-                کلاس‌ها
-              </p>
+              <HiMiniUserGroup className={`font-bold text-4xl ${activeComponent === "Classes" ? "text-gray-300" : "" }`} />
+              <p className={`text-2xl font-black ${activeComponent === "Classes" ? "text-gray-300" : "" }`}>کلاس‌</p>
             </button>
-
             <button
               onClick={() => {
                 setFocusedCard([2]);
                 handleComponentChange("Payments");
               }}
-              className={`btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-      ${
-        activeComponent === "Payments"
-          ? "bg-gradient-to-r from-blue-100 to-slate-800"
-          : ""
-      }`}
-            >
-              <SiCashapp
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Payments" ? "text-gray-300" : ""
+              className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
+              ${activeComponent === "Payments"
+                  ? "bg-gradient-to-r from-slate-700 to-slate-900"
+                  : ""
                 }`}
+            >
+              <GiReceiveMoney
+                className={`text-3xl font-bold ${activeComponent === "Payments" ? "text-gray-300" : ""
+                  }`}
               />
               <p
-                className={`text-4xl font-bold tracking-wide ${
-                  activeComponent === "Payments" ? "text-gray-300" : ""
-                }`}
+                className={`text-2xl font-black  ${activeComponent === "Payments" ? "text-gray-300" : ""
+                  }`}
               >
                 پرداخت
               </p>
@@ -208,10 +186,10 @@ const userPage = () => {
 
             <button
               onClick={LogOut}
-              className="btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
+              className="btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
             >
-              <FaPowerOff className="text-4xl font-bold" />
-              <p className="text-4xl font-bold tracking-wide">خروج</p>
+              <FaPowerOff className="text-3xl font-bold" />
+              <p className="text-2xl font-black">خروج</p>
             </button>
           </nav>
         </div>
@@ -219,26 +197,23 @@ const userPage = () => {
 
       {/* بخش 2 */}
       <div
-        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${
-          focusedCard.includes(2)
+        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${focusedCard.includes(2)
             ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3]"
             : "max-lg:cursor-pointer rounded-s-lg"
-        }`}
+          }`}
       >
         <div
           onClick={() => handleFocus(2)}
-          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
-            focusedCard.includes(2)
+          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${focusedCard.includes(2)
               ? "rotate-0 top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"
-          }`}
+            }`}
         >
           <span
-            className={`text-center md:hover:rotate-0 transform transition-all duration-500 ${
-              focusedCard.includes(2)
+            className={`text-center md:hover:rotate-0 transform transition-all duration-500 ${focusedCard.includes(2)
                 ? "rotate-0"
                 : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer"
-            }`}
+              }`}
           >
             {activeComponent === "Dashboard" && "داشبورد"}
             {activeComponent === "Classes" && "کلاس‌ها"}
