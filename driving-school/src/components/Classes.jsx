@@ -34,25 +34,25 @@ export default function classes() {
             <tr className="text-start">
               <th
                 scope="col"
-                className="px-6 py-4 text-lg font-bold text-primary-400"
+                className="px-6 py-4 text-xl font-black text-slate-700"
               >
                 #
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-lg font-bold text-primary-400"
+                className="px-6 py-4 text-xl font-black text-slate-700"
               >
                 نام مدرس
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-lg font-bold text-primary-400"
+                className="px-6 py-4 text-xl font-black text-slate-700"
               >
                 مکان
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-lg font-bold text-primary-400 "
+                className="px-6 py-4 text-xl font-black text-slate-700 "
               >
                 زمان
               </th>

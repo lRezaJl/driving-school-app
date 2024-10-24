@@ -208,7 +208,7 @@ const userPage = () => {
 
             <button
               onClick={LogOut}
-              className="btn w-full justify-start items-center pr-5 bg-slate-300 rounded-se-3xl hover:bg-gradient-to-r from-blue-100 to-slate-800 transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-coralRed"
+              className="btn w-full justify-start pr-5 bg-slate-300 rounded-se-3xl transition-all duration-500 border-none hover:bg-gray-700 h-16 flex-nowrap flex flex-row gap-x-6 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
             >
               <FaPowerOff className="text-4xl font-bold" />
               <p className="text-4xl font-bold tracking-wide">خروج</p>
