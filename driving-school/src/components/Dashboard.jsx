@@ -27,7 +27,7 @@ export default function classes() {
         </div>
 
         <div className="card bg-slate-900 p-7 py-5 max-2xl:w-fit group">
-          <div className="flex flex-row gap-3 items-end pb-10 text-slate-100 text-2xl font-bold">
+          <div className="flex flex-row gap-3 items-end pb-3 text-slate-100 text-2xl font-bold">
             <div className=" border-t-2 border-slate-100">
               <FaBell className="text-yellow-400 group-hover:animate-rotate-animation" />
             </div>
