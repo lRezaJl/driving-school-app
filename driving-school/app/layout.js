@@ -3,7 +3,7 @@ import "../public/css/style.css";
 import "../public/css/fontiran.css";
 
 export const metadata = {
-  title: "همیاب",
+  title: "راهیاب",
   description: "hamyab app",
 };
 

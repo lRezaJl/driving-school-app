@@ -40,6 +40,7 @@ module.exports = {
         dark: "#1d232a",
         darkCharcoal: "#2D2D2D",
         coralRed: "#FF5733",
+        RedTxt: "#da3510",
         brightBlue: "#0073E6",
         goldenYellow: "#FFD700",
       },

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import Image from "next/image";
-import HamyabLogo from "../../public/logo.png";
+import RahyabLogo from "../../public/logo.png";
 import EditProfile from "@/Components/EditProfile";
 import Dashboard from "@/Components/Dashboard";
 import Classes from "@/Components/Classes";
@@ -62,23 +62,26 @@ const userPage = () => {
     >
       {/* بخش 1 */}
       <div
-        className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${focusedCard.includes(1)
+        className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${
+          focusedCard.includes(1)
             ? "flex-[0.5] max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] max-xl:flex-[0.75]"
             : "max-lg:cursor-pointer"
-          }`}
+        }`}
       >
         <div
           onClick={() => handleFocus(1)}
-          className={`absolute z-40 flex justify-center items-center min-w-[52rem] min-h-20 mt-2 p-2 transform transition-all duration-500 ${focusedCard.includes(1)
+          className={`absolute z-40 flex justify-center items-center min-w-[52rem] min-h-20 mt-2 p-2 transform transition-all duration-500 ${
+            focusedCard.includes(1)
               ? "top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"
-            }`}
+          }`}
         >
           <span
-            className={`text-center hover:rotate-0 text-gray-800 text-xl font-bold transform transition-all duration-500 ${focusedCard.includes(1)
+            className={`text-center hover:rotate-0 text-gray-800 text-xl font-bold transform transition-all duration-500 ${
+              focusedCard.includes(1)
                 ? "rotate-0"
                 : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer text-2xl max-sm:text-lg"
-              }`}
+            }`}
           >
             منو
           </span>
@@ -88,12 +91,14 @@ const userPage = () => {
           <div className="flex items-center gap-4 my-10">
             <Image
               className="w-[112px]"
-              src={HamyabLogo}
-              alt="HamyabLogo"
+              src={RahyabLogo}
+              alt="RahyabLogo"
               width={180}
               height={67}
             />
-            <p className="text-3xl font-black text-slate-900">موسسه آموزشی همیاب</p>
+            <p className="text-3xl font-black text-slate-900">
+              موسسه آموزشی راهیاب
+            </p>
           </div>
 
           <div className="relative flex flex-row justify-start items-start gap-4 p-3 glass bg-slate-900 rounded-box">
@@ -122,7 +127,7 @@ const userPage = () => {
               className="btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
             >
               <IoHome className="text-3xl font-bold" />
-              <p className="text-2xl font-black ">خانه</p>
+              <p className="text-2xl font-black tracking-wide  ">خانه</p>
             </Link>
 
             <button
@@ -131,35 +136,50 @@ const userPage = () => {
                 handleComponentChange("Dashboard");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-              ${activeComponent === "Dashboard"
+              ${
+                activeComponent === "Dashboard"
                   ? "bg-gradient-to-r from-slate-700 to-slate-900"
                   : ""
-                }`}
+              }`}
             >
               <MdSpaceDashboard
-                className={`text-3xl font-bold ${activeComponent === "Dashboard" ? "text-gray-300" : ""
-                  }`}
+                className={`text-3xl font-bold ${
+                  activeComponent === "Dashboard" ? "text-gray-300" : ""
+                }`}
               />
               <p
-                className={`text-2xl font-black ${activeComponent === "Dashboard" ? "text-gray-300" : ""
-                  }`}
+                className={`text-2xl font-black tracking-wide  ${
+                  activeComponent === "Dashboard" ? "text-gray-300" : ""
+                }`}
               >
                 داشبورد
               </p>
             </button>
 
-            <button onClick={() => {
+            <button
+              onClick={() => {
                 setFocusedCard([2]);
                 handleComponentChange("Classes");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-                ${activeComponent === "Classes"
-                  ? "bg-gradient-to-r from-slate-700 to-slate-900"
-                  : ""
+                ${
+                  activeComponent === "Classes"
+                    ? "bg-gradient-to-r from-slate-700 to-slate-900"
+                    : ""
                 }`}
             >
-              <HiMiniUserGroup className={`font-bold text-4xl ${activeComponent === "Classes" ? "text-gray-300" : "" }`} />
-              <p className={`text-2xl font-black ${activeComponent === "Classes" ? "text-gray-300" : "" }`}>کلاس‌</p>
+              <HiMiniUserGroup
+                className={`font-bold text-4xl ${
+                  activeComponent === "Classes" ? "text-gray-300" : ""
+                }`}
+              />
+              <p
+                className={`text-2xl font-black tracking-wide  ${
+                  activeComponent === "Classes" ? "text-gray-300" : ""
+                }`}
+              >
+                کلاس‌
+              </p>
             </button>
             <button
               onClick={() => {
@@ -167,18 +187,21 @@ const userPage = () => {
                 handleComponentChange("Payments");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
-              ${activeComponent === "Payments"
+              ${
+                activeComponent === "Payments"
                   ? "bg-gradient-to-r from-slate-700 to-slate-900"
                   : ""
-                }`}
+              }`}
             >
               <GiReceiveMoney
-                className={`text-3xl font-bold ${activeComponent === "Payments" ? "text-gray-300" : ""
-                  }`}
+                className={`text-3xl font-bold ${
+                  activeComponent === "Payments" ? "text-gray-300" : ""
+                }`}
               />
               <p
-                className={`text-2xl font-black  ${activeComponent === "Payments" ? "text-gray-300" : ""
-                  }`}
+                className={`text-2xl font-black tracking-wide   ${
+                  activeComponent === "Payments" ? "text-gray-300" : ""
+                }`}
               >
                 پرداخت
               </p>
@@ -186,10 +209,12 @@ const userPage = () => {
 
             <button
               onClick={LogOut}
-              className="btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300"
+              className="btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 group"
             >
-              <FaPowerOff className="text-3xl font-bold" />
-              <p className="text-2xl font-black">خروج</p>
+              <FaPowerOff className="text-3xl text-RedTxt group-hover:text-gray-300 font-bold" />
+              <p className="text-2xl text-RedTxt group-hover:text-gray-300 font-black tracking-wide">
+                خروج
+              </p>
             </button>
           </nav>
         </div>
@@ -197,23 +222,26 @@ const userPage = () => {
 
       {/* بخش 2 */}
       <div
-        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${focusedCard.includes(2)
+        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${
+          focusedCard.includes(2)
             ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3]"
             : "max-lg:cursor-pointer rounded-s-lg"
-          }`}
+        }`}
       >
         <div
           onClick={() => handleFocus(2)}
-          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${focusedCard.includes(2)
+          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
+            focusedCard.includes(2)
               ? "rotate-0 top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"
-            }`}
+          }`}
         >
           <span
-            className={`text-center md:hover:rotate-0 transform transition-all duration-500 ${focusedCard.includes(2)
+            className={`text-center md:hover:rotate-0 transform transition-all duration-500 ${
+              focusedCard.includes(2)
                 ? "rotate-0"
                 : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer"
-              }`}
+            }`}
           >
             {activeComponent === "Dashboard" && "داشبورد"}
             {activeComponent === "Classes" && "کلاس‌ها"}
