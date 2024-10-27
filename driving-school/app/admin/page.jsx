@@ -8,7 +8,7 @@ import EditProfile from "@/Components/EditProfile";
 import AdminAutorize from "@/components/AdminAutorize";
 import SignupPage from "@/components/Signup";
 import dashboard from "@/Components/dashboard";
-import Classes from "@/Components/Classes";
+import ClassesAdmin from "@/Components/ClassesAdmin";
 import Payments from "@/Components/Payments";
 
 import { CiEdit } from "react-icons/ci";
@@ -175,23 +175,23 @@ const userPage = () => {
             <button
               onClick={() => {
                 setFocusedCard([2]);
-                handleComponentChange("Classes");
+                handleComponentChange("ClassesAdmin");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
                 ${
-                  activeComponent === "Classes"
+                  activeComponent === "ClassesAdmin"
                     ? "bg-gradient-to-r from-slate-700 to-slate-900"
                     : ""
                 }`}
             >
               <HiMiniUserGroup
                 className={`font-bold text-4xl ${
-                  activeComponent === "Classes" ? "text-gray-300" : ""
+                  activeComponent === "ClassesAdmin" ? "text-gray-300" : ""
                 }`}
               />
               <p
                 className={`text-2xl font-black tracking-wide  ${
-                  activeComponent === "Classes" ? "text-gray-300" : ""
+                  activeComponent === "ClassesAdmin" ? "text-gray-300" : ""
                 }`}
               >
                 کلاس‌
@@ -238,7 +238,7 @@ const userPage = () => {
 
       {/* بخش 2 */}
       <div
-        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${
+        className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-slate-800 flex justify-center items-start min-w-5 ${
           focusedCard.includes(2)
             ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3] overflow-y-auto"
             : "max-lg:cursor-pointer rounded-s-lg"
@@ -260,7 +260,7 @@ const userPage = () => {
             }`}
           >
             {activeComponent === "SignupPage" && "ثبت نام"}
-            {activeComponent === "Classes" && "کلاس‌ها"}
+            {activeComponent === "ClassesAdmin" && "کلاس‌ها"}
             {activeComponent === "Payments" && "پرداخت ها"}
           </span>
         </div>
@@ -270,7 +270,7 @@ const userPage = () => {
           {activeComponent === "SignupPage" && (
             <SignupPage handleComponentChange={handleComponentChange} />
           )}
-          {activeComponent === "Classes" && <Classes />}
+          {activeComponent === "ClassesAdmin" && <ClassesAdmin />}
           {activeComponent === "Payments" && <Payments />}
         </div>
       </div>
