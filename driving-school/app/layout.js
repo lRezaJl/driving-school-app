@@ -1,6 +1,7 @@
 import "./globals.css";
 import "../public/css/style.css";
 import "../public/css/fontiran.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "راهیاب",
@@ -10,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Toaster position="bottom-center" />
+        {children}
+      </body>
     </html>
   );
 }

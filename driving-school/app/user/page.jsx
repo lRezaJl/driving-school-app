@@ -251,7 +251,9 @@ const userPage = () => {
 
         {/* محتوای بخش 2 */}
         <div className="p-5 mt-16 w-full">
-          {activeComponent === "Dashboard" && <Dashboard />}
+          {activeComponent === "Dashboard" && (
+            <Dashboard handleComponentChange={handleComponentChange} />
+          )}
           {activeComponent === "Classes" && <Classes />}
           {activeComponent === "Payments" && <Payments />}
         </div>

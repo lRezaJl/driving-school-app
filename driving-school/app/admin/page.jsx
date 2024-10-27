@@ -5,7 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import RahyabLogo from "../../public/logo.png";
 import EditProfile from "@/Components/EditProfile";
-import Dashboard from "@/Components/Dashboard";
+import AdminAutorize from "@/components/AdminAutorize";
+import SignupPage from "@/components/Signup";
+import dashboard from "@/Components/dashboard";
 import Classes from "@/Components/Classes";
 import Payments from "@/Components/Payments";
 
@@ -20,9 +22,9 @@ import { FaUserEdit } from "react-icons/fa";
 
 const userPage = () => {
   const [focusedCard, setFocusedCard] = useState([2]);
-  console.log(focusedCard);
+  const [login, setLogin] = useState(0); // Start as 0, meaning not logged in
   const [router, setRouter] = useState(null);
-  const [activeComponent, setActiveComponent] = useState("Dashboard");
+  const [activeComponent, setActiveComponent] = useState("AdminAutorize");
 
   const handleComponentChange = (componentName) => {
     setActiveComponent(componentName);
@@ -53,7 +55,20 @@ const userPage = () => {
   }
 
   function Backdrop() {
-    setActiveComponent("Dashboard");
+    setActiveComponent("SignupPage");
+  }
+  function AdminAuto() {
+    setActiveComponent("SignupPage");
+  }
+
+  const handleAuthorize = () => {
+    setLogin(1); // Set login to 1 (logged in) once authorized
+    setActiveComponent("SignupPage");
+  };
+
+  // Only render AdminAutorize if not logged in
+  if (login === 0) {
+    return <AdminAutorize AdminAuto={handleAuthorize} />;
   }
 
   return (
@@ -65,7 +80,7 @@ const userPage = () => {
       <div
         className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${
           focusedCard.includes(1)
-            ? "flex-[0.5] max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] max-xl:flex-[0.75]"
+            ? "flex-[0.5] max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] max-xl:flex-[0.75] overflow-y-auto"
             : "max-lg:cursor-pointer"
         }`}
       >
@@ -134,23 +149,23 @@ const userPage = () => {
             <button
               onClick={() => {
                 setFocusedCard([2]);
-                handleComponentChange("Dashboard");
+                handleComponentChange("SignupPage");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
               ${
-                activeComponent === "Dashboard"
+                activeComponent === "SignupPage"
                   ? "bg-gradient-to-r from-slate-700 to-slate-900"
                   : ""
               }`}
             >
               <FaUserEdit
                 className={`text-3xl font-bold ${
-                  activeComponent === "Dashboard" ? "text-gray-300" : ""
+                  activeComponent === "SignupPage" ? "text-gray-300" : ""
                 }`}
               />
               <p
                 className={`text-2xl font-black  tracking-wide ${
-                  activeComponent === "Dashboard" ? "text-gray-300" : ""
+                  activeComponent === "SignupPage" ? "text-gray-300" : ""
                 }`}
               >
                 ثبت نام
@@ -225,7 +240,7 @@ const userPage = () => {
       <div
         className={`relative flex-1 h-full overflow-hidden rounded-box transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${
           focusedCard.includes(2)
-            ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3]"
+            ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3] overflow-y-auto"
             : "max-lg:cursor-pointer rounded-s-lg"
         }`}
       >
@@ -244,7 +259,7 @@ const userPage = () => {
                 : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer"
             }`}
           >
-            {activeComponent === "Dashboard" && "داشبورد"}
+            {activeComponent === "SignupPage" && "ثبت نام"}
             {activeComponent === "Classes" && "کلاس‌ها"}
             {activeComponent === "Payments" && "پرداخت ها"}
           </span>
@@ -252,7 +267,9 @@ const userPage = () => {
 
         {/* محتوای بخش 2 */}
         <div className="p-5 mt-16 w-full">
-          {activeComponent === "Dashboard" && <Dashboard />}
+          {activeComponent === "SignupPage" && (
+            <SignupPage handleComponentChange={handleComponentChange} />
+          )}
           {activeComponent === "Classes" && <Classes />}
           {activeComponent === "Payments" && <Payments />}
         </div>

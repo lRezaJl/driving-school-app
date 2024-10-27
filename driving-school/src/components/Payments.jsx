@@ -7,7 +7,7 @@ export default function Payments() {
     <div>
       <div
         dir="rtl"
-        className="card bg-slate-900 p-7 py-5  w-full h-96 overflow-y-scroll overflow-x-auto"
+        className="card bg-slate-900 p-7 py-5  w-full  overflow-y-auto overflow-x-auto"
       >
         {/* <div className="relative m-[2px] mb-3 mr-5 float-left">
           <input
@@ -21,7 +21,7 @@ export default function Payments() {
         </div> */}
 
         <table className="min-w-full text-left text-sm whitespace-nowrap p-2 ">
-          <thead className="uppercase tracking-wider sticky top-0 outline outline-2  bg-slate-900 drop-shadow-sm">
+          <thead className="uppercase tracking-wider sticky top-0 outline outline-2  bg-slate-800 drop-shadow-sm">
             <tr className="text-start">
               <th
                 scope="col"
