@@ -272,7 +272,7 @@ const userPage = () => {
       >
         <div
           onClick={() => handleFocus(2)}
-          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
+          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-slate-300 text-2xl font-black ${
             focusedCard.includes(2)
               ? "rotate-0 top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"

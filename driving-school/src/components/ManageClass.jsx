@@ -83,7 +83,7 @@ export default function ManageClass() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id
+          id,
         }),
       });
 
@@ -100,7 +100,7 @@ export default function ManageClass() {
   };
 
   const toggleForm = (id) => {
-    setClassId(id)
+    setClassId(id);
     setIsFormVisible(!isFormVisible);
   };
 
@@ -109,7 +109,6 @@ export default function ManageClass() {
       setIsFormVisible(false);
     }
   };
-
 
   useEffect(() => {
     if (isFormVisible) {
@@ -121,9 +120,9 @@ export default function ManageClass() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              classId
+              classId,
             }),
-          })
+          });
           const data = await response.json();
           setUsers(data);
         } catch (error) {
@@ -143,7 +142,7 @@ export default function ManageClass() {
             headers: {
               "Content-Type": "application/json",
             },
-          })
+          });
           const data = await response.json();
           setAllUsers(data);
         } catch (error) {
@@ -163,7 +162,7 @@ export default function ManageClass() {
         },
         body: JSON.stringify({
           userId,
-          classId
+          classId,
         }),
       });
 
@@ -188,7 +187,7 @@ export default function ManageClass() {
         },
         body: JSON.stringify({
           userId,
-          classId
+          classId,
         }),
       });
 
@@ -202,7 +201,6 @@ export default function ManageClass() {
       console.error("Error logging in:", error);
     }
   };
-
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center bg-slate-800">
@@ -260,8 +258,15 @@ export default function ManageClass() {
                   </p>
                 </td>
                 <td className="px-2 py-4 flex justify-center gap-x-2 items-center">
-                  <FaBook  className="hover:text-red-700 hover:cursor-pointer" size={28} />
-                  <MdEditSquare onClick={(e) => toggleForm(classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} />
+                  <FaBook
+                    className="hover:text-red-700 hover:cursor-pointer"
+                    size={28}
+                  />
+                  <MdEditSquare
+                    onClick={(e) => toggleForm(classData.id)}
+                    className="hover:text-red-700 hover:cursor-pointer"
+                    size={34}
+                  />
                 </td>
               </tr>
             ))}
@@ -269,40 +274,59 @@ export default function ManageClass() {
         </table>
       </div>
 
-      <button
-        onClick={toggleForm}
-        className="btn btn-warning text-lg font-bold my-5"
-      >
-        ایجاد کلاس
-      </button>
-
       {isFormVisible && (
-        <div>
-          <h1>Class Users</h1>
-          <ul>
-            {users.map(user => (
-              <li key={user.id}>
-                {user.name}
-                <button onClick={() => handleDeleteUser(user.id)}>حذف</button>
-              </li>
-            ))}
-          </ul>
-          <div>
-            <select
-              value={newUserId}
-              onChange={(e) => setNewUserId(e.target.value)}
-            >
-              <option value="">انتخاب کاربر جدید</option>
-              {allUsers.map(user => (
-                <option key={user.id} value={user.id}>{user.name}</option>
+        <div className="flex justify-start items-start w-full m-5">
+          <div className="card bg-slate-700 text-slate-300 w-fit px-8 py-5">
+            <h2 className="text-xl font-black text-slate-300">کاربران کلاس</h2>
+            <ul className="grid grid-cols-4 gap-y-10 my-6 gap-x-20">
+              {users.map((user) => (
+                <li
+                  key={user.id}
+                  className="flex justify-between items-center gap-8 text-lg font-bold "
+                >
+                  <div>
+                    <p>{user.name}</p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => handleDeleteUser(user.id)}
+                      className="btn bg-coralRed text-slate-300 hover:bg-RedTxt"
+                    >
+                      حذف
+                    </button>
+                  </div>
+                </li>
               ))}
-            </select>
-            <button onClick={()=> handleAddUser(newUserId)} disabled={!newUserId}>
-              افزودن کاربر جدید
-            </button>
+            </ul>
           </div>
         </div>
       )}
+
+      <div className="card bg-slate-700 flex flex-col gap-4 w-full px-10 py-8 m-5 mt-2">
+        <p className="text-slate-200 font-bold">انتخاب کاربر جدید:</p>
+        <div className="flex flex-wrap gap-4">
+          {allUsers.map((user) => (
+            <label key={user.id} className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="newUser"
+                value={user.id}
+                checked={newUserId === user.id}
+                onChange={() => setNewUserId(user.id)}
+                className="radio radio-warning"
+              />
+              <span className="text-slate-200">{user.name}</span>
+            </label>
+          ))}
+        </div>
+        <button
+          onClick={() => handleAddUser(newUserId)}
+          disabled={!newUserId}
+          className="btn btn-warning disabled:bg-gray-800/35 mt-4"
+        >
+          افزودن کاربر جدید
+        </button>
+      </div>
     </div>
   );
 }
