@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { TbTrashXFilled } from "react-icons/tb";
+import { FaBook } from "react-icons/fa6";
+import { MdEditSquare } from "react-icons/md";
 
-
-export default function ClassesAdmin() {
+export default function ManageClass() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const [address, setAddress] = useState("");
@@ -14,12 +15,16 @@ export default function ClassesAdmin() {
   const [noe_tadris, setNoe_tadris] = useState("");
   const [morabiOptions, setMorabiOptions] = useState([]);
   const [getClass, setGetClass] = useState([]);
+  const [classId, setClassId] = useState("");
+
+  const [users, setUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [newUserId, setNewUserId] = useState("");
 
   useEffect(() => {
-    // Fetch options for 'morabi' from API
     const fetchMorabiOptions = async () => {
       try {
-        const response = await axios.get("/api/GetMorabi/"); // replace with your actual endpoint
+        const response = await axios.get("/api/GetMorabi/");
         setMorabiOptions(response.data);
       } catch (error) {
         console.error("Error fetching morabi options:", error);
@@ -29,10 +34,9 @@ export default function ClassesAdmin() {
   }, []);
 
   useEffect(() => {
-    // Fetch options for 'morabi' from API
     const fetchGetClass = async () => {
       try {
-        const response = await axios.get("/api/GetClass/"); // replace with your actual endpoint
+        const response = await axios.get("/api/GetClass/");
         setGetClass(response.data);
       } catch (error) {
         console.error("Error fetching morabi options:", error);
@@ -95,7 +99,8 @@ export default function ClassesAdmin() {
     }
   };
 
-  const toggleForm = () => {
+  const toggleForm = (id) => {
+    setClassId(id)
     setIsFormVisible(!isFormVisible);
   };
 
@@ -104,6 +109,100 @@ export default function ClassesAdmin() {
       setIsFormVisible(false);
     }
   };
+
+
+  useEffect(() => {
+    if (isFormVisible) {
+      const fetchUsers = async () => {
+        try {
+          const response = await fetch("/api/GetUsersOfClass/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              classId
+            }),
+          })
+          const data = await response.json();
+          setUsers(data);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+      fetchUsers();
+    }
+  }, [isFormVisible, classId]);
+
+  useEffect(() => {
+    if (isFormVisible) {
+      const fetchUsers = async () => {
+        try {
+          const response = await fetch("/api/GetUsers/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          const data = await response.json();
+          setAllUsers(data);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+      fetchUsers();
+    }
+  }, [isFormVisible, classId]);
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      const response = await fetch("/api/DeleteUserFromClass/", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          classId
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.message === "User removed from class") {
+        toast.success("کاربر با موفقیت حذف شد");
+      } else {
+        toast.error("مشکلی پیش آمده");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
+  const handleAddUser = async (userId) => {
+    try {
+      const response = await fetch("/api/AddUserToClass/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          classId
+        }),
+      });
+
+      const data = await response.json();
+      if (data.message === "User Added to class successfully") {
+        toast.success("کاربر با موفقیت به کلاس اضافه شد");
+      } else {
+        toast.error("مشکلی پیش آمده");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center bg-slate-800">
@@ -160,7 +259,10 @@ export default function ClassesAdmin() {
                     </span>
                   </p>
                 </td>
-                <td className="px-2 py-4 flex justify-center items-center"><TbTrashXFilled onClick={(e)=> handleDelete(e,classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
+                <td className="px-2 py-4 flex justify-center gap-x-2 items-center">
+                  <FaBook  className="hover:text-red-700 hover:cursor-pointer" size={28} />
+                  <MdEditSquare onClick={(e) => toggleForm(classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -175,106 +277,29 @@ export default function ClassesAdmin() {
       </button>
 
       {isFormVisible && (
-        <div
-          className="fixed modal-background w-screen h-screen top-0 flex justify-center items-center left-0 bg-dark/20 backdrop-blur-md backdrop-saturate-150"
-          onClick={handleBackgroundClick}
-        >
-          <div
-            className="m-auto w-96 h-fit rounded-2xl px-10 py-8 bg-slate-700 text-slate-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <form
-              onSubmit={handleSubmit}
-              className="w-full flex flex-col gap-5 justify-center items-center"
+        <div>
+          <h1>Class Users</h1>
+          <ul>
+            {users.map(user => (
+              <li key={user.id}>
+                {user.name}
+                <button onClick={() => handleDeleteUser(user.id)}>حذف</button>
+              </li>
+            ))}
+          </ul>
+          <div>
+            <select
+              value={newUserId}
+              onChange={(e) => setNewUserId(e.target.value)}
             >
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  placeholder="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="relative w-full">
-                <input
-                  type="number"
-                  className="input input-bordered w-full"
-                  placeholder="class_number"
-                  value={class_number}
-                  onChange={(e) => setClass_number(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  placeholder="class_time"
-                  value={class_time}
-                  onChange={(e) => setClass_time(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="relative w-full">
-                <select
-                  className="input input-bordered w-full"
-                  placeholder="Select Morabi"
-                  value={morabi}
-                  onChange={(e) => setMorabi(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select Morabi
-                  </option>
-                  {morabiOptions.map((option) => (
-                    <option key={option.id} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="relative w-full">
-                <div className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg font-medium">
-                      تئوری
-                    </span>
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value={false}
-                      onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                      className="radio checked:bg-warning"
-                    />
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg font-medium">عملی</span>
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value={true}
-                      onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                      className="radio checked:bg-warning"
-                    />
-                  </label>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="btn text-3xl font-bold w-full btn-warning"
-              >
-                تایید
-              </button>
-            </form>
+              <option value="">انتخاب کاربر جدید</option>
+              {allUsers.map(user => (
+                <option key={user.id} value={user.id}>{user.name}</option>
+              ))}
+            </select>
+            <button onClick={()=> handleAddUser(newUserId)} disabled={!newUserId}>
+              افزودن کاربر جدید
+            </button>
           </div>
         </div>
       )}

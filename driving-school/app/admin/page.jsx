@@ -9,8 +9,9 @@ import AdminAutorize from "@/components/AdminAutorize";
 import SignupPage from "@/components/Signup";
 import dashboard from "@/Components/dashboard";
 import ClassesAdmin from "@/Components/ClassesAdmin";
+import ManageClass from "@/components/ManageClass";
 import Payments from "@/Components/Payments";
-
+import { MdManageAccounts } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa6";
@@ -200,6 +201,31 @@ const userPage = () => {
             <button
               onClick={() => {
                 setFocusedCard([2]);
+                handleComponentChange("ManageClass");
+              }}
+              className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
+                ${
+                  activeComponent === "ManageClass"
+                    ? "bg-gradient-to-r from-slate-700 to-slate-900"
+                    : ""
+                }`}
+            >
+              <MdManageAccounts
+                className={`font-bold text-4xl ${
+                  activeComponent === "ManageClass" ? "text-gray-300" : ""
+                }`}
+              />
+              <p
+                className={`text-2xl font-black tracking-wide  ${
+                  activeComponent === "ManageClass" ? "text-gray-300" : ""
+                }`}
+              >
+                مدیریت کلاس ها
+              </p>
+            </button>
+            <button
+              onClick={() => {
+                setFocusedCard([2]);
                 handleComponentChange("Payments");
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
@@ -261,6 +287,7 @@ const userPage = () => {
           >
             {activeComponent === "SignupPage" && "ثبت نام"}
             {activeComponent === "ClassesAdmin" && "کلاس‌ها"}
+            {activeComponent === "ManageClass" && "مدیریت کلاس ها"}
             {activeComponent === "Payments" && "پرداخت ها"}
           </span>
         </div>
@@ -272,6 +299,7 @@ const userPage = () => {
           )}
           {activeComponent === "ClassesAdmin" && <ClassesAdmin />}
           {activeComponent === "Payments" && <Payments />}
+          {activeComponent === "ManageClass" && <ManageClass />}
         </div>
       </div>
 
