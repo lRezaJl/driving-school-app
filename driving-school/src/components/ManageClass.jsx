@@ -46,7 +46,7 @@ export default function ManageClass() {
   };
 
   useEffect(() => {
-    if ((isFormVisible, isFormVisible1)) {
+    if (isFormVisible || isFormVisible1) {
       const fetchUsers = async () => {
         try {
           const response = await fetch("/api/GetUsersOfClass/", {
@@ -229,25 +229,15 @@ export default function ManageClass() {
           <div className="card bg-slate-700 text-slate-300 px-8 py-5 w-full">
             <h2 className="text-xl font-black text-slate-200">
               هنرجویان کلاس{" "}
-              <span className="bg-yellow-500 text-slate-100 rounded-2xl py-0.5 px-2">
+              <span className="text-yellow-400  rounded-2xl py-0.5 px-2">
                 {classId}#
               </span>
             </h2>
-            <ul
-              className={`grid gap-y-5 my-6 gap-x-20 ${
-                users.length > 5
-                  ? "sm:grid-cols-2 max-sm:grid-cols-1"
-                  : users.length > 10
-                  ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                  : users.length > 15
-                  ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                  : "grid-cols-1"
-              }`}
-            >
+            <ul className="grid py-2 gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               {users.map((user) => (
                 <li
                   key={user.id}
-                  className="rounded-md bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-coralRed focus-within:hover:bg-coralRed"
+                  className="card bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-coralRed focus-within:hover:bg-coralRed"
                 >
                   <p className="text-pretty focus-within:text-slate-200">
                     {user.name}
@@ -269,25 +259,15 @@ export default function ManageClass() {
         <div className="card bg-slate-700 flex flex-col gap-4 w-full px-10 py-8 m-5 mt-2">
           <h2 className="text-xl font-black text-slate-200">
             هنرجویان کلاس{" "}
-            <span className="bg-yellow-500 text-slate-100 rounded-2xl py-0.5 px-2">
+            <span className="text-yellow-400 rounded-2xl py-0.5 px-2">
               {classId}#
             </span>
           </h2>
-          <div
-            className={`grid gap-y-5 my-6 gap-x-20 ${
-              users.length > 5
-                ? "sm:grid-cols-2 max-sm:grid-cols-1"
-                : users.length > 10
-                ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                : users.length > 15
-                ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                : "grid-cols-1"
-            }`}
-          >
+          <div className="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {allUsers.map((user) => (
               <label
                 key={user.id}
-                className="rounded-md bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-slate-600"
+                className="card bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-slate-600"
               >
                 <span className="text-slate-200 text-lg font-bold">
                   {user.name}
