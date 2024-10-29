@@ -24,7 +24,7 @@ export default function Dashboard({ handleComponentChange }) {
     <div>
       <div className="flex 2xl:flex-row flex-col gap-5 w-full">
         {/* کارت اطلاعات کاربر */}
-        <div className="card bg-slate-900 text-slate-100 p-7 py-5 flex flex-row flex-wrap gap-5 items-center justify-stretch ss02">
+        <div className="card bg-slate-700 text-slate-100 p-7 py-5 flex flex-row flex-wrap gap-5 items-center justify-stretch ss02">
           {userInfo.map((info, index) => (
             <div
               key={index}
@@ -39,7 +39,7 @@ export default function Dashboard({ handleComponentChange }) {
         </div>
 
         {/* کارت اعلان‌ها */}
-        <div className="card bg-slate-900 p-7 py-5 max-2xl:w-fit group">
+        <div className="card bg-slate-700 p-7 py-5 max-2xl:w-fit group">
           <div className="flex flex-row gap-3 items-end pb-3 text-slate-100 text-2xl font-bold">
             <div className="border-t-2 border-slate-100">
               <FaBell className="text-yellow-400 group-hover:animate-rotate-animation" />
