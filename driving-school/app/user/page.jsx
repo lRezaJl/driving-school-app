@@ -8,6 +8,7 @@ import EditProfile from "@/Components/EditProfile";
 import Dashboard from "@/Components/Dashboard";
 import Classes from "@/Components/Classes";
 import Payments from "@/Components/Payments";
+import UserAutoize from "@/components/UserAutorize";
 
 import { CiEdit } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
@@ -19,9 +20,9 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 
 const userPage = () => {
   const [focusedCard, setFocusedCard] = useState([2]);
-  console.log(focusedCard);
+  const [login, setLogin] = useState(0); // Start as 0, meaning not logged in
   const [router, setRouter] = useState(null);
-  const [activeComponent, setActiveComponent] = useState("Dashboard");
+  const [activeComponent, setActiveComponent] = useState("UserAutoize");
 
   const handleComponentChange = (componentName) => {
     setActiveComponent(componentName);
@@ -53,6 +54,15 @@ const userPage = () => {
 
   function Backdrop() {
     setActiveComponent("Dashboard");
+  }
+
+  const handleAuthorize = () => {
+    setLogin(1); // Set login to 1 (logged in) once authorized
+    setActiveComponent("SignupPage");
+  };
+
+  if (login === 0) {
+    return <UserAutoize AdminAuto={handleAuthorize} />;
   }
 
   return (
