@@ -231,19 +231,19 @@ const userPage = () => {
               }}
               className={`btn w-full justify-start bg-gray-100 rounded-se-3xl transition-all duration-500 border-none hover:bg-slate-900 h-16 flex-nowrap flex flex-row gap-x-3 hover:shadow-inner shadow-md text-gray-700 hover:text-gray-300 
                 ${
-                  activeComponent === "ManageClass"
+                  activeComponent === "ManageUser"
                     ? "bg-gradient-to-r from-slate-700 to-slate-900"
                     : ""
                 }`}
             >
               <MdManageAccounts
                 className={`font-bold text-4xl ${
-                  activeComponent === "ManageClass" ? "text-gray-300" : ""
+                  activeComponent === "ManageUser" ? "text-gray-300" : ""
                 }`}
               />
               <p
                 className={`text-2xl font-black tracking-wide  ${
-                  activeComponent === "ManageClass" ? "text-gray-300" : ""
+                  activeComponent === "ManageUser" ? "text-gray-300" : ""
                 }`}
               >
                 مدیریت کاربران
