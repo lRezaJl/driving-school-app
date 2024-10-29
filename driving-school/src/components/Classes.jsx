@@ -3,7 +3,7 @@ export default function classes() {
     <div>
       <div
         dir="rtl"
-        className="card bg-slate-900 p-7 py-5  w-full max-h-96 overflow-y-auto overflow-x-auto"
+        className="card bg-slate-700 p-7 py-5  w-full max-h-96 overflow-y-auto overflow-x-auto"
       >
         {/* <div className="relative m-[2px] mb-3 mr-5 float-left">
           <input
