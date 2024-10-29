@@ -8,6 +8,9 @@ import { MdEditSquare } from "react-icons/md";
 export default function ManageClass() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isFormVisible1, setIsFormVisible1] = useState(false);
+  const [selectedClassId, setSelectedClassId] = useState(null);
+  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [selectedEditId, setSelectedEditId] = useState(null);
 
   const [getClass, setGetClass] = useState([]);
   const [classId, setClassId] = useState("");
@@ -28,23 +31,22 @@ export default function ManageClass() {
     fetchGetClass();
   }, []);
 
-  const toggleForm = (id) => {
+  const toggleBookIcon = (id) => {
+    // Toggle the selectedBookId
+    setSelectedBookId((prevId) => (prevId === id ? null : id));
+    setIsFormVisible((prevVisible) => !prevVisible); // Toggle form visibility
     setClassId(id);
-    setIsFormVisible(!isFormVisible);
-  };
-  const toggleForm1 = (id) => {
-    setClassId(id);
-    setIsFormVisible1(!isFormVisible1);
   };
 
-  const handleBackgroundClick = (e) => {
-    if (e.target.classList.contains("modal-background")) {
-      setIsFormVisible(false);
-    }
+  const toggleEditIcon = (id) => {
+    // Toggle the selectedEditId
+    setSelectedEditId((prevId) => (prevId === id ? null : id));
+    setIsFormVisible1((prevVisible) => !prevVisible); // Toggle form visibility
+    setClassId(id);
   };
 
   useEffect(() => {
-    if (isFormVisible, isFormVisible1) {
+    if ((isFormVisible, isFormVisible1)) {
       const fetchUsers = async () => {
         try {
           const response = await fetch("/api/GetUsersOfClass/", {
@@ -126,7 +128,6 @@ export default function ManageClass() {
           classId,
         }),
       });
-
       const data = await response.json();
       if (data.message === "User Added to class successfully") {
         toast.success("کاربر با موفقیت به کلاس اضافه شد");
@@ -142,7 +143,7 @@ export default function ManageClass() {
     <div className="relative w-full h-full flex flex-col justify-center items-center bg-slate-800">
       <div
         dir="rtl"
-        className="card bg-slate-700 p-7 py-5 w-full max-h-96 overflow-y-auto overflow-x-auto mt-8"
+        className="card bg-slate-700 px-8 py-5 w-full max-h-96 overflow-y-auto overflow-x-auto mt-8"
       >
         <table className="min-w-full text-left text-sm whitespace-nowrap p-2">
           <thead className="uppercase tracking-wider sticky top-0 outline outline-2 bg-slate-800 drop-shadow-sm">
@@ -174,7 +175,11 @@ export default function ManageClass() {
             {getClass.map((classData) => (
               <tr
                 key={classData.id}
-                className="border-b hover:bg-slate-50 hover:text-slate-800 text-center text-slate-200 text-xl"
+                className={`border-b text-center text-slate-200 text-xl font-semibold ${
+                  selectedClassId === classData.id
+                    ? "bg-slate-200 text-slate-800"
+                    : ""
+                } hover:bg-slate-600 hover:text-slate-200`}
               >
                 <th scope="row" className="px-6 py-4 text-yellow-400">
                   {classData.id}
@@ -195,13 +200,21 @@ export default function ManageClass() {
                 </td>
                 <td className="px-2 py-4 flex justify-center gap-x-2 items-center">
                   <FaBook
-                    onClick={(e) => toggleForm(classData.id)}
-                    className="hover:text-red-700 hover:cursor-pointer"
+                    onClick={() => toggleBookIcon(classData.id)}
+                    className={`hover:cursor-pointer ${
+                      selectedBookId === classData.id
+                        ? "text-yellow-500"
+                        : "text-slate-200"
+                    }`}
                     size={28}
                   />
                   <MdEditSquare
-                    onClick={(e) => toggleForm1(classData.id)}
-                    className="hover:text-red-700 hover:cursor-pointer"
+                    onClick={() => toggleEditIcon(classData.id)}
+                    className={`hover:cursor-pointer ${
+                      selectedEditId === classData.id
+                        ? "text-yellow-500"
+                        : "text-slate-200"
+                    }`}
                     size={34}
                   />
                 </td>
@@ -214,18 +227,34 @@ export default function ManageClass() {
       {isFormVisible && (
         <div className="flex justify-start items-start w-full m-5">
           <div className="card bg-slate-700 text-slate-300 px-8 py-5 w-full">
-            <h2 className="text-xl font-black text-slate-200">هنرجویان کلاس</h2>
-            <ul className="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            <h2 className="text-xl font-black text-slate-200">
+              هنرجویان کلاس{" "}
+              <span className="bg-yellow-500 text-slate-100 rounded-2xl py-0.5 px-2">
+                {classId}#
+              </span>
+            </h2>
+            <ul
+              className={`grid gap-y-5 my-6 gap-x-20 ${
+                users.length > 5
+                  ? "sm:grid-cols-2 max-sm:grid-cols-1"
+                  : users.length > 10
+                  ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
+                  : users.length > 15
+                  ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
+                  : "grid-cols-1"
+              }`}
             >
               {users.map((user) => (
                 <li
                   key={user.id}
-                  className="card bg-slate-800 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold"
+                  className="rounded-md bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-coralRed focus-within:hover:bg-coralRed"
                 >
-                  <p className="text-pretty">{user.name}</p>
+                  <p className="text-pretty focus-within:text-slate-200">
+                    {user.name}
+                  </p>
                   <button
                     onClick={() => handleDeleteUser(user.id)}
-                    className="text-yellow-400 hover:text-slate-300"
+                    className="text-yellow-400 hover:text-slate-300 focus:outline-none focus-within:text-slate-200"
                   >
                     <TbTrashXFilled className="text-2xl" />
                   </button>
@@ -238,28 +267,46 @@ export default function ManageClass() {
 
       {isFormVisible1 && (
         <div className="card bg-slate-700 flex flex-col gap-4 w-full px-10 py-8 m-5 mt-2">
-          <p className="text-slate-200 text-xl font-black">انتخاب هنرجو</p>
-          <div className="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <h2 className="text-xl font-black text-slate-200">
+            هنرجویان کلاس{" "}
+            <span className="bg-yellow-500 text-slate-100 rounded-2xl py-0.5 px-2">
+              {classId}#
+            </span>
+          </h2>
+          <div
+            className={`grid gap-y-5 my-6 gap-x-20 ${
+              users.length > 5
+                ? "sm:grid-cols-2 max-sm:grid-cols-1"
+                : users.length > 10
+                ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
+                : users.length > 15
+                ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
+                : "grid-cols-1"
+            }`}
+          >
             {allUsers.map((user) => (
-              <label key={user.id} className="card bg-slate-800 flex flex-row-reverse justify-between p-2 items-center gap-2">
+              <label
+                key={user.id}
+                className="rounded-md bg-slate-800 hover:bg-slate-600 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold transition-colors duration-300 focus-within:bg-slate-600"
+              >
+                <span className="text-slate-200 text-lg font-bold">
+                  {user.name}
+                </span>
                 <input
                   type="radio"
                   name="newUser"
                   value={user.id}
                   checked={newUserId === user.id}
                   onChange={() => setNewUserId(user.id)}
-                  className="radio radio-warning"
+                  className="radio radio-warning peer"
                 />
-                <span className="text-slate-200 text-lg font-bold">
-                  {user.name}
-                </span>
               </label>
             ))}
           </div>
           <button
             onClick={() => handleAddUser(newUserId)}
             disabled={!newUserId}
-            className="btn bg-yellow-400 text-xl text-slate-800 font-black  disabled:bg-gray-800/35 mt-4"
+            className="btn bg-yellow-400 text-xl text-slate-800 font-black hover:bg-primary-400 disabled:bg-gray-800/35 mt-4"
           >
             افزودن کاربر جدید
           </button>
