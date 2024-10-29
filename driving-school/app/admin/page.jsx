@@ -328,7 +328,6 @@ const userPage = () => {
           {activeComponent === "ManageClass" && <ManageClass />}
           {activeComponent === "ManageUser" && <ManageUser />}
           {activeComponent === "Payments" && <Payments />}
-          {activeComponent === "ManageClass" && <ManageClass />}
         </div>
       </div>
 
