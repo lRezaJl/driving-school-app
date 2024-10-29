@@ -10,7 +10,6 @@ export default function SignupPage() {
   const [address, setAddress] = useState("");
   const [codemeli, setCodemeli] = useState("");
   const [telephone, setTelephone] = useState("");
-  const [noe_tadris, setNoe_tadris] = useState("");
   const [user_type, setUser_type] = useState("");
 
   const handleSubmit = async (e) => {
@@ -27,7 +26,6 @@ export default function SignupPage() {
           address,
           codemeli,
           telephone,
-          noe_tadris,
           user_type,
         }),
       });
@@ -138,32 +136,6 @@ export default function SignupPage() {
             >
               شماره موبایل
             </label>
-          </div>
-          <div className="relative w-full">
-            <div className="form-control">
-              <label className="label cursor-pointer">
-                <span className="label-text text-lg font-medium">تئوری</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  value={false}
-                  onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                  className="radio checked:bg-warning"
-                />
-              </label>
-            </div>
-            <div className="form-control">
-              <label className="label cursor-pointer">
-                <span className="label-text text-lg font-medium">عملی</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  value={true}
-                  onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                  className="radio checked:bg-warning"
-                />
-              </label>
-            </div>
           </div>
 
           <div className="relative w-full">

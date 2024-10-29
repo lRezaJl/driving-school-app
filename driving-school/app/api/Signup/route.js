@@ -2,7 +2,7 @@ import axios from "axios";
 import { URL } from "../../../utility/config";
 
 export async function POST(req) {
-  const { name, sen, address, codemeli, telephone, noe_tadris, user_type } =
+  const { name, sen, address, codemeli, telephone, user_type } =
     await req.json();
 
   try {
@@ -12,7 +12,6 @@ export async function POST(req) {
       address,
       codemeli,
       telephone,
-      noe_tadris,
       user_type,
     });
 

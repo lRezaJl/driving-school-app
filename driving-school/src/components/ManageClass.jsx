@@ -9,30 +9,12 @@ export default function ManageClass() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isFormVisible1, setIsFormVisible1] = useState(false);
 
-  const [address, setAddress] = useState("");
-  const [class_number, setClass_number] = useState("");
-  const [class_time, setClass_time] = useState("");
-  const [morabi, setMorabi] = useState("");
-  const [noe_tadris, setNoe_tadris] = useState("");
-  const [morabiOptions, setMorabiOptions] = useState([]);
   const [getClass, setGetClass] = useState([]);
   const [classId, setClassId] = useState("");
 
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [newUserId, setNewUserId] = useState("");
-
-  useEffect(() => {
-    const fetchMorabiOptions = async () => {
-      try {
-        const response = await axios.get("/api/GetMorabi/");
-        setMorabiOptions(response.data);
-      } catch (error) {
-        console.error("Error fetching morabi options:", error);
-      }
-    };
-    fetchMorabiOptions();
-  }, []);
 
   useEffect(() => {
     const fetchGetClass = async () => {
@@ -45,60 +27,6 @@ export default function ManageClass() {
     };
     fetchGetClass();
   }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/PostClass/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          address,
-          class_number,
-          class_time,
-          morabi,
-          noe_tadris,
-        }),
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (data.message === "Class created successfully") {
-        toast.success("ثبت نام انجام شد!");
-      } else {
-        toast.error("قبل ثبت نام شده یا اشتباه پر کردید");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
-  };
-
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/DeleteClass/", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-        }),
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (data.message === "Class deleted successfully") {
-        toast.success("ثبت نام انجام شد!");
-      } else {
-        toast.error("قبل ثبت نام شده یا اشتباه پر کردید");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
-  };
 
   const toggleForm = (id) => {
     setClassId(id);
@@ -116,7 +44,7 @@ export default function ManageClass() {
   };
 
   useEffect(() => {
-    if (isFormVisible) {
+    if (isFormVisible, isFormVisible1) {
       const fetchUsers = async () => {
         try {
           const response = await fetch("/api/GetUsersOfClass/", {
@@ -136,7 +64,7 @@ export default function ManageClass() {
       };
       fetchUsers();
     }
-  }, [isFormVisible, classId]);
+  }, [isFormVisible, isFormVisible1, classId]);
 
   useEffect(() => {
     if (isFormVisible1) {
@@ -149,14 +77,18 @@ export default function ManageClass() {
             },
           });
           const data = await response.json();
-          setAllUsers(data);
+          const filteredUsers = data.filter(
+            (user) => !users.some((classUser) => classUser.id === user.id)
+          );
+
+          setAllUsers(filteredUsers);
         } catch (error) {
           console.error("Error fetching users:", error);
         }
       };
       fetchUsers();
     }
-  }, [isFormVisible1, classId]);
+  }, [isFormVisible1, users]);
 
   const handleDeleteUser = async (userId) => {
     try {
@@ -282,34 +214,21 @@ export default function ManageClass() {
       {isFormVisible && (
         <div className="flex justify-start items-start w-full m-5">
           <div className="card bg-slate-700 text-slate-300 px-8 py-5 w-full">
-            <h2 className="text-xl font-black text-slate-200">هنرجوبان کلاس</h2>
-            <ul
-              className={`grid gap-y-5 my-6 gap-x-20 ${
-                users.length > 5
-                  ? "sm:grid-cols-2 max-sm:grid-cols-1"
-                  : users.length > 10
-                  ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                  : users.length > 15
-                  ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                  : "grid-cols-1"
-              }`}
+            <h2 className="text-xl font-black text-slate-200">هنرجویان کلاس</h2>
+            <ul className="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             >
               {users.map((user) => (
                 <li
                   key={user.id}
-                  className="flex justify-between items-center gap-5 text-lg font-bold"
+                  className="card bg-slate-800 flex flex-row px-4 py-2 justify-between items-center text-lg font-bold"
                 >
-                  <div>
-                    <p className="text-pretty">{user.name}</p>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => handleDeleteUser(user.id)}
-                      className="btn p-3 rounded-full bg-slate-300 text-RedTxt hover:text-slate-300 hover:bg-RedTxt font-black"
-                    >
-                      <TbTrashXFilled className="text-2xl" />
-                    </button>
-                  </div>
+                  <p className="text-pretty">{user.name}</p>
+                  <button
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="text-yellow-400 hover:text-slate-300"
+                  >
+                    <TbTrashXFilled className="text-2xl" />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -320,19 +239,9 @@ export default function ManageClass() {
       {isFormVisible1 && (
         <div className="card bg-slate-700 flex flex-col gap-4 w-full px-10 py-8 m-5 mt-2">
           <p className="text-slate-200 text-xl font-black">انتخاب هنرجو</p>
-          <div
-            className={`grid gap-y-10 my-6 gap-x-20 ${
-              users.length > 5
-                ? "sm:grid-cols-2 max-sm:grid-cols-1"
-                : users.length > 10
-                ? "xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                : users.length > 15
-                ? "2xl:grid-cols-4 xl:grid-cols-3 sm:grid-cols-2 max-sm:grid-cols-1"
-                : "grid-cols-1"
-            }`}
-          >
+          <div className="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {allUsers.map((user) => (
-              <label key={user.id} className="flex items-center gap-2">
+              <label key={user.id} className="card bg-slate-800 flex flex-row-reverse justify-between p-2 items-center gap-2">
                 <input
                   type="radio"
                   name="newUser"
@@ -350,7 +259,7 @@ export default function ManageClass() {
           <button
             onClick={() => handleAddUser(newUserId)}
             disabled={!newUserId}
-            className="btn btn-warning disabled:bg-gray-800/35 mt-4"
+            className="btn bg-yellow-400 text-xl text-slate-800 font-black  disabled:bg-gray-800/35 mt-4"
           >
             افزودن کاربر جدید
           </button>

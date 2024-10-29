@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import { TbTrashXFilled } from "react-icons/tb";
+import { toast } from "react-hot-toast";
 
 export default function ManageUser() {
   const [allUsers, setAllUsers] = useState([]);
@@ -32,6 +33,31 @@ export default function ManageUser() {
     };
     fetchUsers();
   }, []);
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/DeleteUser/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.message === "User deleted successfully") {
+        toast.success("کاربر با موفقیت حذف شد");
+      } else {
+        toast.error("مشکلی پیش امده");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
 
   return (
     <div>
@@ -83,7 +109,7 @@ export default function ManageUser() {
                     ? "هنرجو"
                     : "ادمین"}
                 </td>
-                <td className="px-6 py-4 text-lg text-slate-300">عملیات</td>
+                <td className="px-6 py-4 text-lg text-slate-300 flex justify-center items-center"><TbTrashXFilled onClick={(e)=> handleDelete(e, user.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
               </tr>
             ))}
           </tbody>
