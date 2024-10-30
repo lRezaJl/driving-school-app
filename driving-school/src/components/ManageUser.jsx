@@ -11,7 +11,6 @@ export default function ManageUser() {
     "کدملی",
     "سن",
     "شماره تفلن",
-    "نوع تدریس",
     "نوع کاربر",
     "عملیات",
   ];
@@ -34,6 +33,21 @@ export default function ManageUser() {
     fetchUsers();
   }, []);
 
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/GetUsers/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setAllUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   const handleDelete = async (e, id) => {
     e.preventDefault();
     try {
@@ -51,6 +65,7 @@ export default function ManageUser() {
       console.log(data);
       if (data.message === "User deleted successfully") {
         toast.success("کاربر با موفقیت حذف شد");
+        fetchUsers()
       } else {
         toast.error("مشکلی پیش امده");
       }
@@ -100,14 +115,7 @@ export default function ManageUser() {
                   {user.telephone}
                 </td>
                 <td className="px-6 py-4 text-lg text-slate-300">
-                  {user.noe_tadris === true ? "عملی" : "تئوری"}
-                </td>
-                <td className="px-6 py-4 text-lg text-slate-300">
-                  {user.noe_tadris === 1
-                    ? "مربی"
-                    : user.noe_tadris === 2
-                    ? "هنرجو"
-                    : "ادمین"}
+                  {user.user_type === 1 ? "مربی" :  "هنرجو"}
                 </td>
                 <td className="px-6 py-4 text-lg text-slate-300 flex justify-center items-center"><TbTrashXFilled onClick={(e)=> handleDelete(e, user.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
               </tr>

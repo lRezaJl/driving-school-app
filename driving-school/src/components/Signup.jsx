@@ -34,6 +34,12 @@ export default function SignupPage() {
       console.log(data);
       if (data.message === "User created successfully") {
         toast.success("ثبت نام انجام شد!");
+        setName("");
+        setSen("");
+        setAddress("");
+        setCodemeli("");
+        setTelephone("");
+        setUser_type("");
       } else {
         toast.error("قبل ثبت نام شده یا اشتباه پر کردید");
       }
@@ -51,7 +57,7 @@ export default function SignupPage() {
         >
           <div className="relative w-full mb-2">
             <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
               type="text"
               id="name"
               inputMode="text"
@@ -61,7 +67,7 @@ export default function SignupPage() {
               required
             />
             <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               htmlFor="name"
             >
               نام
@@ -69,7 +75,7 @@ export default function SignupPage() {
           </div>
           <div className="relative w-full mb-2">
             <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
               type="number"
               id="name"
               inputMode="numeric"
@@ -79,7 +85,7 @@ export default function SignupPage() {
               required
             />
             <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               htmlFor="sen"
             >
               سن
@@ -87,7 +93,7 @@ export default function SignupPage() {
           </div>
           <div className="relative w-full">
             <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
               type="text"
               id="nationalcode"
               inputMode="tel"
@@ -97,15 +103,15 @@ export default function SignupPage() {
               required
             />
             <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
+              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
               htmlFor="nationalcode"
             >
-              کد ملی مشتری
+              کد ملی 
             </label>
           </div>
           <div className="relative my-2 w-full">
             <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
               type="text"
               inputMode="text"
               placeholder=""
@@ -114,7 +120,7 @@ export default function SignupPage() {
               required
             />
             <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               htmlFor="Address"
             >
               آدرس
@@ -122,7 +128,7 @@ export default function SignupPage() {
           </div>
           <div className="relative w-full">
             <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-sky-400 peer"
+              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
               id="Phonenumber"
               inputMode="tel"
               placeholder=""
@@ -131,16 +137,16 @@ export default function SignupPage() {
               required
             />
             <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-sky-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               htmlFor="Phonenumber"
             >
               شماره موبایل
             </label>
           </div>
 
-          <div className="relative w-full">
+          <div className="relative w-full py-4">
             <select
-              className="select select-bordered rounded-xl w-full max-w-xs bg-slate-700 border-2 border-gray-300 text-lg"
+              className="select select-bordered rounded-3xl h-full py-4 w-full max-w-xs bg-slate-700 border-2 border-gray-300 text-lg"
               value={user_type}
               onChange={(e) => setUser_type(e.target.value)}
               required
@@ -150,13 +156,12 @@ export default function SignupPage() {
               </option>
               <option value={1}>مربی</option>
               <option value={2}>هنرجو</option>
-              <option value={3}>ادمین</option>
             </select>
           </div>
 
           <button
             type="submit"
-            className="btn text-3xl font-bold w-full btn-warning"
+            className="btn text-3xl font-bold w-full text-gray-800 btn-warning"
           >
             تایید
           </button>

@@ -2,18 +2,10 @@ import axios from "axios";
 import { URL } from "../../../utility/config";
 
 export async function POST(req) {
-  const { address, class_number, class_time, day, morabi, noe_tadris } =
-    await req.json();
+  const { codemeli } = await req.json();
 
   try {
-    const response = await axios.post(`${URL}/api/v1/admin/class/`, {
-      address,
-      class_number,
-      class_time,
-      morabi,
-      noe_tadris,
-      day,
-    });
+    const response = await axios.post(`${URL}/api/v1/user/login/`, { codemeli });
 
     return new Response(JSON.stringify(response.data), {
       status: 200,

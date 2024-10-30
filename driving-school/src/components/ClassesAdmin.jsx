@@ -11,15 +11,30 @@ export default function ClassesAdmin() {
   const [class_number, setClass_number] = useState("");
   const [class_time, setClass_time] = useState("");
   const [morabi, setMorabi] = useState("");
-  const [noe_tadris, setNoe_tadris] = useState("");
+  const [noe_tadris, setNoe_tadris] = useState(false);
   const [morabiOptions, setMorabiOptions] = useState([]);
   const [getClass, setGetClass] = useState([]);
+  
+  const days = [
+    { fullName: "شنبه", shortName: "ش" },
+    { fullName: "یکشنبه", shortName: "ی" },
+    { fullName: "دوشنبه", shortName: "د" },
+    { fullName: "سه‌شنبه", shortName: "س" },
+    { fullName: "چهارشنبه", shortName: "چ" },
+    { fullName: "پنج‌شنبه", shortName: "پ" }
+  ];
+
+  const [day, setSelectedDay] = useState("شنبه");
+
+  const handleDayClick = (day) => {
+    setSelectedDay(day.fullName);
+  };
+
 
   useEffect(() => {
-    // Fetch options for 'morabi' from API
     const fetchMorabiOptions = async () => {
       try {
-        const response = await axios.get("/api/GetMorabi/"); // replace with your actual endpoint
+        const response = await axios.get("/api/GetMorabi/");
         setMorabiOptions(response.data);
       } catch (error) {
         console.error("Error fetching morabi options:", error);
@@ -29,10 +44,9 @@ export default function ClassesAdmin() {
   }, []);
 
   useEffect(() => {
-    // Fetch options for 'morabi' from API
     const fetchGetClass = async () => {
       try {
-        const response = await axios.get("/api/GetClass/"); // replace with your actual endpoint
+        const response = await axios.get("/api/GetClass/");
         setGetClass(response.data);
       } catch (error) {
         console.error("Error fetching morabi options:", error);
@@ -40,6 +54,15 @@ export default function ClassesAdmin() {
     };
     fetchGetClass();
   }, []);
+
+  const fetchGetClass = async () => {
+    try {
+      const response = await axios.get("/api/GetClass/");
+      setGetClass(response.data);
+    } catch (error) {
+      console.error("Error fetching morabi options:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +77,7 @@ export default function ClassesAdmin() {
           class_number,
           class_time,
           morabi,
+          day,
           noe_tadris,
         }),
       });
@@ -61,9 +85,17 @@ export default function ClassesAdmin() {
       const data = await response.json();
       console.log(data);
       if (data.message === "Class created successfully") {
-        toast.success("ثبت نام انجام شد!");
+        toast.success("کلاس با موفقیت ایجاد شد");
+        setAddress("");
+        setClass_number("");
+        setClass_time("");
+        setMorabi("");
+        setNoe_tadris(false);
+        setSelectedDay("شنبه");
+        fetchGetClass()
+        toggleForm()
       } else {
-        toast.error("قبل ثبت نام شده یا اشتباه پر کردید");
+        toast.error("مشکلی پیش آمده");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -86,9 +118,10 @@ export default function ClassesAdmin() {
       const data = await response.json();
       console.log(data);
       if (data.message === "Class deleted successfully") {
-        toast.success("ثبت نام انجام شد!");
+        toast.success("کلاس با موفقیت حذف شد");
+        fetchGetClass()
       } else {
-        toast.error("قبل ثبت نام شده یا اشتباه پر کردید");
+        toast.error("مشکلی پیش آمده");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -132,6 +165,9 @@ export default function ClassesAdmin() {
               <th scope="col" className="px-6 py-4">
                 زمان
               </th>
+              <th scope="col" className="px-6 py-4">
+                روز
+              </th>
               <th scope="col" className="px-2 py-4">
                 عملیات
               </th>
@@ -160,7 +196,10 @@ export default function ClassesAdmin() {
                     </span>
                   </p>
                 </td>
-                <td className="px-2 py-4 flex justify-center items-center"><TbTrashXFilled onClick={(e)=> handleDelete(e,classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
+                <th className="px-6 py-4 text-yellow-400">
+                  {classData.day}
+                </th>
+                <td className="px-2 py-4 flex justify-center items-center"><TbTrashXFilled onClick={(e) => handleDelete(e, classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
               </tr>
             ))}
           </tbody>
@@ -187,49 +226,72 @@ export default function ClassesAdmin() {
               onSubmit={handleSubmit}
               className="w-full flex flex-col gap-5 justify-center items-center"
             >
-              <div className="relative w-full">
+              <div className="relative w-full mb-2">
                 <input
+                  className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
                   type="text"
-                  className="input input-bordered w-full"
-                  placeholder="address"
+                  id="address"
+                  inputMode="text"
+                  placeholder=""
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   required
                 />
+                <label
+                  className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  htmlFor="address"
+                >
+                  آدرس
+                </label>
               </div>
 
-              <div className="relative w-full">
+              <div className="relative w-full mb-2">
                 <input
+                  className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
                   type="number"
-                  className="input input-bordered w-full"
-                  placeholder="class_number"
+                  id="class_number"
+                  inputMode="numeric"
+                  placeholder=""
                   value={class_number}
                   onChange={(e) => setClass_number(e.target.value)}
                   required
                 />
+                <label
+                  className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  htmlFor="class_number"
+                >
+                  شماره کلاس
+                </label>
               </div>
 
-              <div className="relative w-full">
+              <div className="relative w-full mb-2">
                 <input
+                  className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-slate-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
                   type="text"
-                  className="input input-bordered w-full"
-                  placeholder="class_time"
+                  id="class_time"
+                  inputMode="text"
+                  placeholder=""
                   value={class_time}
                   onChange={(e) => setClass_time(e.target.value)}
                   required
                 />
+                <label
+                  className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-10 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  htmlFor="class_time"
+                >
+                  زمان کلاس
+                </label>
               </div>
 
-              <div className="relative w-full">
+              <div className="relative w-full pb-2">
                 <select
-                  className="input input-bordered w-full"
-                  placeholder="Select Morabi"
+                  className="select select-bordered rounded-3xl h-full py-4 w-full max-w-xs bg-slate-700 border-2 border-gray-300 text-lg"
                   value={morabi}
                   onChange={(e) => setMorabi(e.target.value)}
                   required
                 >
                   <option value="" disabled>
-                    Select Morabi
+                    مربی کلاس را انتخاب کنید
                   </option>
                   {morabiOptions.map((option) => (
                     <option key={option.id} value={option.id}>
@@ -239,33 +301,52 @@ export default function ClassesAdmin() {
                 </select>
               </div>
 
-              <div className="relative w-full">
-                <div className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg font-medium">
-                      تئوری
-                    </span>
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value={false}
-                      onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                      className="radio checked:bg-warning"
-                    />
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text text-lg font-medium">عملی</span>
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value={true}
-                      onChange={(e) => setNoe_tadris(e.target.value === "true")}
-                      className="radio checked:bg-warning"
-                    />
-                  </label>
-                </div>
+              <div className="relative w-full flex flex-row gap-x-5">
+
+                <label
+                  className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300"
+                >
+                  <span className=" text-lg font-bold">
+                    تئوری
+                  </span>
+                  <input
+                    type="radio"
+                    name="noe_tadris"
+                    value={false}
+                    checked={noe_tadris === false}
+                    onChange={() => setNoe_tadris(false)}
+                    className="radio radio-warning peer"
+                  />
+                </label>
+                <label
+                  className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300"
+                >
+                  <span className=" text-lg font-bold">
+                    عملی
+                  </span>
+                  <input
+                    type="radio"
+                    name="noe_tadris"
+                    value={true}
+                    checked={noe_tadris === true}
+                    onChange={() => setNoe_tadris(true)}
+                    className="radio radio-warning peer"
+                  />
+                </label>
+              </div>
+
+              <div className="flex gap-2">
+                {days.map((dayy) => (
+                  <div
+                    key={dayy.fullName}
+                    onClick={() => handleDayClick(dayy)}
+                    className={`h-11 w-11 flex justify-center items-center cursor-pointer rounded-md transition-colors font-bold
+                        ${day === dayy.fullName ? 'bg-yellow-400 text-gray-700' : 'bg-gray-300 text-gray-700'}
+                        hover:bg-yellow-400`}
+                  >
+                    {dayy.shortName}
+                  </div>
+                ))}
               </div>
 
               <button

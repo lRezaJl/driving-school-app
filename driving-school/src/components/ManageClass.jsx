@@ -32,17 +32,29 @@ export default function ManageClass() {
   }, []);
 
   const toggleBookIcon = (id) => {
-    // Toggle the selectedBookId
-    setSelectedBookId((prevId) => (prevId === id ? null : id));
-    setIsFormVisible((prevVisible) => !prevVisible); // Toggle form visibility
-    setClassId(id);
+    if (selectedBookId === id) {
+      setSelectedBookId(null);
+      setIsFormVisible(false);
+    } else {
+      setSelectedBookId(id);
+      setSelectedEditId(null);
+      setIsFormVisible(true);
+      setIsFormVisible1(false);
+      setClassId(id);
+    }
   };
-
+  
   const toggleEditIcon = (id) => {
-    // Toggle the selectedEditId
-    setSelectedEditId((prevId) => (prevId === id ? null : id));
-    setIsFormVisible1((prevVisible) => !prevVisible); // Toggle form visibility
-    setClassId(id);
+    if (selectedEditId === id) {
+      setSelectedEditId(null);
+      setIsFormVisible1(false);
+    } else {
+      setSelectedEditId(id);
+      setSelectedBookId(null);
+      setIsFormVisible1(true);
+      setIsFormVisible(false);
+      setClassId(id);
+    }
   };
 
   useEffect(() => {
@@ -92,6 +104,49 @@ export default function ManageClass() {
     }
   }, [isFormVisible1, users]);
 
+
+
+
+  const getusers = async () => {
+    try {
+      const response = await fetch("/api/GetUsersOfClass/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          classId,
+        }),
+      });
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/GetUsers/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      const filteredUsers = data.filter(
+        (user) => !users.some((classUser) => classUser.id === user.id)
+      );
+
+      setAllUsers(filteredUsers);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+
+
   const handleDeleteUser = async (userId) => {
     try {
       const response = await fetch("/api/DeleteUserFromClass/", {
@@ -109,6 +164,8 @@ export default function ManageClass() {
 
       if (data.message === "User removed from class") {
         toast.success("کاربر با موفقیت حذف شد");
+        getusers()
+        fetchUsers()
       } else {
         toast.error("مشکلی پیش آمده");
       }
@@ -131,6 +188,8 @@ export default function ManageClass() {
       const data = await response.json();
       if (data.message === "User Added to class successfully") {
         toast.success("کاربر با موفقیت به کلاس اضافه شد");
+        getusers()
+        fetchUsers()
       } else {
         toast.error("مشکلی پیش آمده");
       }
@@ -166,6 +225,9 @@ export default function ManageClass() {
               <th scope="col" className="px-6 py-4">
                 زمان
               </th>
+              <th scope="col" className="px-6 py-4">
+                روز
+              </th>
               <th scope="col" className="px-2 py-4">
                 عملیات
               </th>
@@ -198,6 +260,9 @@ export default function ManageClass() {
                     </span>
                   </p>
                 </td>
+                <th className="px-6 py-4 text-yellow-400">
+                  {classData.day}
+                </th>
                 <td className="px-2 py-4 flex justify-center gap-x-2 items-center">
                   <FaBook
                     onClick={() => toggleBookIcon(classData.id)}

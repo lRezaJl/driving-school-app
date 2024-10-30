@@ -1,23 +1,76 @@
 import { FaBell } from "react-icons/fa6";
 import { TiInfoLarge } from "react-icons/ti";
+import { useState, useEffect } from "react";
 
 export default function Dashboard({ handleComponentChange }) {
-  // این بخش اطلاعات کاربر را به طور ساختاریافته نمایش می‌دهد.
-  const userInfo = [
-    { label: "نام", value: "کمیل فتحی پور" },
-    { label: "سن", value: "23" },
-    { label: "کدملی", value: "3841480682" },
-    { label: "تلفن", value: "09123456789" },
-  ];
 
-  const notifications = [
-    { day: "چهارشنبه", date: "02/11", time: "17:30", description: "کلاس داری" },
-    {
-      day: "پنجشنبه",
-      date: "02/12",
-      time: "14:00",
-      description: "جلسه با مدیر",
-    },
+  const [name, setName] = useState("")
+  const [sen, setSen] = useState("")
+  const [codemeliNumber, setCodemeliNumber] = useState("")
+  const [telephone, setTelephone] = useState("")
+  const [address, setAddress] = useState("")
+  const [classes, setClasses] = useState([])
+
+  useEffect(() => {
+
+    const fetchGetClass = async () => {
+      const codemeli = localStorage.getItem("codemeli")
+      try {
+        const response = await fetch("/api/GetAllUserClasses/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            codemeli,
+          }),
+        });
+        const data = await response.json();
+        setClasses(data);
+
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
+    };
+    fetchGetClass();
+  }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+
+      const codemeli = localStorage.getItem("codemeli")
+
+      try {
+        const response = await fetch("/api/UserData/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            codemeli,
+          }),
+        });
+        const data = await response.json();
+        console.log(data);
+        
+        setName(data.name)
+        setCodemeliNumber(data.codemeli)
+        setTelephone(data.telephone)
+        setSen(data.sen)
+        setAddress(data.address)
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const userInfo = [
+    { label: "نام", value: name },
+    { label: "سن", value: sen },
+    { label: "کدملی", value: codemeliNumber },
+    { label: "تلفن", value: telephone },
+    { label: "آدرس", value: address },
   ];
 
   return (
@@ -47,17 +100,18 @@ export default function Dashboard({ handleComponentChange }) {
             <p>اعلان‌ها</p>
           </div>
 
-          {notifications.map((notification, index) => (
+          {classes.map((notification, index) => (
             <div
               key={index}
               className="flex flex-row justify-between items-center gap-4 my-5 text-slate-100"
             >
               <p className="whitespace-pre-wrap text-lg max-lg:text-base">
                 <span>{notification.day} </span>
-                <span>{notification.date} </span>
                 <span>ساعت </span>
-                <span>{notification.time} </span>
-                <span>{notification.description} </span>
+                <span className="text-yellow-400">{notification.class_time} </span>
+                <span>در کلاس </span>
+                <span className="text-yellow-400">{notification.class_number} </span>
+                <span>کلاس داری </span>
               </p>
               <button onClick={() => handleComponentChange("Classes")}>
                 <TiInfoLarge className="text-2xl rounded-full ring-2 ring-slate-200" />
