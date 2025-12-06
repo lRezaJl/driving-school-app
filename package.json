@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "npm run dev --prefix driving-school",
+    "build": "npm run build --prefix driving-school",
+    "start": "npm run start --prefix driving-school"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.25"
+  }
+}

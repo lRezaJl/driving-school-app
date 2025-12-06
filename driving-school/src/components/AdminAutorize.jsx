@@ -1,86 +1,121 @@
-import { MdPassword } from "react-icons/md";
 import { useState } from "react";
-import axios from "axios";
-import { URL } from "../../utility/config";
 import { toast } from "react-hot-toast";
+import {
+  RiAdminLine,
+  RiLockPasswordLine,
+  RiUserLine,
+  RiArrowRightLine,
+} from "react-icons/ri";
 
 export default function AdminAutorize({ AdminAuto }) {
   const [username, setUserName] = useState("");
   const [password, setUserPasswod] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch("/api/LoginAdmin/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
+      if (response.status === 403) {
+        toast.error("دسترسی غیر مجاز");
+        setLoading(false);
+        return;
+      }
+
       const data = await response.json();
-      console.log(data);
+
       if (data.message === "Login successful") {
+        if (data?.user && data?.user?.type) {
+          localStorage.setItem("admin_user_type", data?.user?.type);
+        }
+        if (data?.user && data?.user?.name) {
+          localStorage.setItem("admin_name", data?.user?.name);
+        }
+        localStorage.setItem("admin_username", username);
+        toast.success("ورود موفقیت آمیز بود");
         AdminAuto();
       } else {
-        toast.error("user name or password is wrong");
+        toast.error("نام کاربری یا رمز عبور اشتباه است");
       }
     } catch (error) {
       console.error("Error logging in:", error);
+      toast.error("خطا در ورود به سیستم");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className=" w-screen h-screen flex justify-center items-center bg-slate-800">
-      <div className="m-auto z-50 w-96 max-h-96 rounded-2xl px-10 py-8 bg-slate-700 text-gray-300">
-        <form
-          onSubmit={handleSubmit}
-          className="w-full flex flex-col gap-5 justify-center items-center"
-        >
-          <div className="relative w-full">
-            <input
-              className="mt-2 outline-none  border-2 rounded-3xl px-4 py-2 border-gray-300 text-gray-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
-              id="Phonenumber"
-              inputMode="tel"
-              placeholder=""
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
-            <label
-              className="absolute text-gray-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-              htmlFor="Phonenumber"
-            >
+    <div className="w-full h-full my-auto flex justify-center items-center p-4 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-dark-950 -z-20"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-600/10 rounded-full blur-[100px] animate-pulse -z-10" />
+
+      <div className="glass-card w-full max-w-sm p-8 md:p-10 relative overflow-hidden animate-fade-in border-t border-white/10">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-secondary-600/20 text-secondary-500 flex items-center justify-center mx-auto mb-4 text-3xl shadow-glowSecondary">
+            <RiAdminLine />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">
+            پنل مدیریت آموزشگاه
+          </h2>
+          <p className="text-dark-400 text-sm">ورود مختص مدیران و کارکنان</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5" dir="rtl">
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-dark-300 mr-1">
               نام کاربری
             </label>
+            <div className="relative">
+              <RiUserLine className="absolute right-3 top-3.5 text-dark-400 text-lg" />
+              <input
+                className="input-field pr-10 focus:ring-secondary-500 focus:border-secondary-500"
+                type="text"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+                required
+                placeholder="admin"
+              />
+            </div>
           </div>
-          <div className="relative w-full mb-5">
-            <input
-              className="mt-2 outline-none border-2 rounded-3xl px-4 py-2 border-slate-300 text-gray-300 block pb-2.5 pt-4 w-full text-lg bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-yellow-400 peer"
-              type="text"
-              id="nationalcode"
-              inputMode="tel"
-              placeholder=""
-              value={password}
-              onChange={(e) => setUserPasswod(e.target.value)}
-              required
-            />
-            <label
-              className="absolute text-slate-300 text-lg font-normal duration-300 transform -translate-y-2 px-2 scale-75 top-0 z-10 origin-[0] bg-slate-700 mx-2 peer-focus:px-2 peer-focus:text-yellow-400 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-8 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3.5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-              htmlFor="nationalcode"
-            >
+
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-dark-300 mr-1">
               رمز عبور
             </label>
+            <div className="relative">
+              <RiLockPasswordLine className="absolute right-3 top-3.5 text-dark-400 text-lg" />
+              <input
+                className="input-field pr-10 focus:ring-secondary-500 focus:border-secondary-500"
+                type="password"
+                value={password}
+                onChange={(e) => setUserPasswod(e.target.value)}
+                required
+                placeholder="•••••••"
+              />
+            </div>
           </div>
+
           <button
             type="submit"
-            className="btn text-3xl font-bold w-full btn-warning"
+            disabled={loading}
+            className="btn-primary bg-secondary-600 hover:bg-secondary-500 focus:ring-secondary-500 w-full flex items-center justify-center gap-2 group mt-4"
           >
-            تایید
+            {loading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              <>
+                <span>ورود به پنل</span>
+                <RiArrowRightLine className="group-hover:-translate-x-1 transition-transform" />
+              </>
+            )}
           </button>
         </form>
       </div>

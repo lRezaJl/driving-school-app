@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { TbTrashXFilled } from "react-icons/tb";
 
-
 export default function ClassesAdmin() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -14,14 +13,14 @@ export default function ClassesAdmin() {
   const [noe_tadris, setNoe_tadris] = useState(false);
   const [morabiOptions, setMorabiOptions] = useState([]);
   const [getClass, setGetClass] = useState([]);
-  
+
   const days = [
     { fullName: "شنبه", shortName: "ش" },
     { fullName: "یکشنبه", shortName: "ی" },
     { fullName: "دوشنبه", shortName: "د" },
     { fullName: "سه‌شنبه", shortName: "س" },
     { fullName: "چهارشنبه", shortName: "چ" },
-    { fullName: "پنج‌شنبه", shortName: "پ" }
+    { fullName: "پنج‌شنبه", shortName: "پ" },
   ];
 
   const [day, setSelectedDay] = useState("شنبه");
@@ -29,7 +28,6 @@ export default function ClassesAdmin() {
   const handleDayClick = (day) => {
     setSelectedDay(day.fullName);
   };
-
 
   useEffect(() => {
     const fetchMorabiOptions = async () => {
@@ -92,8 +90,8 @@ export default function ClassesAdmin() {
         setMorabi("");
         setNoe_tadris(false);
         setSelectedDay("شنبه");
-        fetchGetClass()
-        toggleForm()
+        fetchGetClass();
+        toggleForm();
       } else {
         toast.error("مشکلی پیش آمده");
       }
@@ -111,7 +109,7 @@ export default function ClassesAdmin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id
+          id,
         }),
       });
 
@@ -119,7 +117,7 @@ export default function ClassesAdmin() {
       console.log(data);
       if (data.message === "Class deleted successfully") {
         toast.success("کلاس با موفقیت حذف شد");
-        fetchGetClass()
+        fetchGetClass();
       } else {
         toast.error("مشکلی پیش آمده");
       }
@@ -196,10 +194,14 @@ export default function ClassesAdmin() {
                     </span>
                   </p>
                 </td>
-                <th className="px-6 py-4 text-yellow-400">
-                  {classData.day}
-                </th>
-                <td className="px-2 py-4 flex justify-center items-center"><TbTrashXFilled onClick={(e) => handleDelete(e, classData.id)} className="hover:text-red-700 hover:cursor-pointer" size={34} /></td>
+                <th className="px-6 py-4 text-yellow-400">{classData.day}</th>
+                <td className="px-2 py-4 flex justify-center items-center">
+                  <TbTrashXFilled
+                    onClick={(e) => handleDelete(e, classData.id)}
+                    className="hover:text-red-700 hover:cursor-pointer"
+                    size={34}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -215,7 +217,7 @@ export default function ClassesAdmin() {
 
       {isFormVisible && (
         <div
-          className="fixed modal-background w-screen h-screen top-0 flex justify-center items-center left-0 bg-dark/20 backdrop-blur-md backdrop-saturate-150"
+          className="fixed modal-background w-screen h-screen top-0 flex justify-center items-center left-0 bg-dark/60 backdrop-blur-md backdrop-saturate-150"
           onClick={handleBackgroundClick}
         >
           <div
@@ -302,13 +304,8 @@ export default function ClassesAdmin() {
               </div>
 
               <div className="relative w-full flex flex-row gap-x-5">
-
-                <label
-                  className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300"
-                >
-                  <span className=" text-lg font-bold">
-                    تئوری
-                  </span>
+                <label className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300">
+                  <span className=" text-lg font-bold">تئوری</span>
                   <input
                     type="radio"
                     name="noe_tadris"
@@ -318,12 +315,8 @@ export default function ClassesAdmin() {
                     className="radio radio-warning peer"
                   />
                 </label>
-                <label
-                  className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300"
-                >
-                  <span className=" text-lg font-bold">
-                    عملی
-                  </span>
+                <label className="card w-full bg-slate-800 hover:bg-yellow-400 hover:text-gray-700 flex flex-row px-4 py-4 justify-between items-center text-lg font-bold transition-colors duration-300">
+                  <span className=" text-lg font-bold">عملی</span>
                   <input
                     type="radio"
                     name="noe_tadris"
@@ -341,7 +334,11 @@ export default function ClassesAdmin() {
                     key={dayy.fullName}
                     onClick={() => handleDayClick(dayy)}
                     className={`h-11 w-11 flex justify-center items-center cursor-pointer rounded-md transition-colors font-bold
-                        ${day === dayy.fullName ? 'bg-yellow-400 text-gray-700' : 'bg-gray-300 text-gray-700'}
+                        ${
+                          day === dayy.fullName
+                            ? "bg-yellow-400 text-gray-700"
+                            : "bg-gray-300 text-gray-700"
+                        }
                         hover:bg-yellow-400`}
                   >
                     {dayy.shortName}
